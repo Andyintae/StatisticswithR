@@ -19,12 +19,70 @@ ames %>% summarise(mu = mean(area),
                    pop_q1 = quantile(area, 0.25),
                    pop_q3 = quantile(area, 0.75))
 
-# Which of the following is false?
- 2
-#   The distribution of areas of houses in Ames is unimodal and right-skewed.
-# 50% of houses in Ames are smaller than 1,499.69 square feet.
-# The middle 50% of the houses range between approximately 1,126 square feet and 1,742.7 square feet.
-# The IQR is approximately 616.7 square feet.
-# The smallest house is 334 square feet and the largest is 5,642 square feet.
+
  
- 
+samp1 <- ames %>% sample_n(size = 50)
+samp1
+
+ggplot(data = samp1, aes(x = area)) +
+  geom_histogram(binwidth = 250)
+
+samp1 %>% summarise(x_bar = mean(area))
+
+
+samp2 <- ames %>% sample_n(size = 50)
+samp2 %>% summarise(x_bar = mean(area))
+
+sample_means50 <- ames %>% 
+  rep_sample_n(size = 50, reps = 15000, replace = TRUE) %>% 
+  summarise(x_bar = mean(area))
+
+ggplot(data = sample_means50, aes(x = x_bar))+
+  geom_histogram(binwidth = 20)
+
+sameple_means_small <- ames %>% 
+  rep_sample_n(size = 10, reps = 25, replace = TRUE) %>% 
+  summarise(x_bar = mean(area))
+
+sameple_means_small
+
+
+sameple_means_small %>% ggplot(aes(x_bar))+
+  geom_histogram(binwidth = 20)
+
+
+
+samp2 <- ames %>% sample_n(size = 50)
+
+samp2 %>% summarise(mean_price = mean(price))
+
+sample_means50 <- ames %>% 
+  rep_sample_n(size = 50, reps = 5000, replace = TRUE)
+
+sample_means50 %>% ggplot(aes(price))+
+  geom_histogram(bins = 30)
+
+sample_means150 <- ames %>% 
+  rep_sample_n(size = 150, reps = 5000, replace = TRUE)
+
+sample_means150 %>% ggplot(aes(price))+
+  geom_histogram(bins = 30)
+
+ames %>% sample_n(size = 15) %>% 
+  summarize(mean(price))
+
+sample_means15 <- ames %>% 
+  rep_sample_n(size = 15, reps = 2000, replace = TRUE) %>% 
+  summarize(mean_p = mean(price))
+
+sample_means15 %>% ggplot(aes(mean_p))+
+  geom_histogram()
+
+sample_means150 <- ames %>% 
+  rep_sample_n(size = 150, reps = 2000, replace = TRUE) %>% 
+  summarize(mean_p = mean(price))
+
+sample_means150 %>% ggplot(aes(mean_p))+
+  geom_histogram()
+
+
